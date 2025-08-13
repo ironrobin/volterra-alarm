@@ -1,7 +1,7 @@
 pkgname="volterra-firmware"
 pkgdesc="Microsoft Dev Kit 2023 (Project Volterra) firmware"
 pkgver=20250808
-pkgrel=1
+pkgrel=2
 arch=("any")
 options=('!strip')
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
@@ -77,6 +77,6 @@ package_volterra-firmware() {
 #   cd "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp
 #   ln -s LENOVO/21BX/audioreach-tplg.bin SC8280XP-LENOVO-volterra-tplg.bin
 #   # Create a symlink for volterra's WiFi card
-#   cd "${pkgdir}"/usr/lib/firmware/ath11k/WCN6855
-#   ln -s hw2.0/ hw2.1
+  cd "${pkgdir}"/usr/lib/firmware/ath11k/WCN6855
+  ln -s hw2.0/ hw2.1
 }
