@@ -1,0 +1,70 @@
+pkgname="volterra-firmware"
+pkgdesc="Microsoft Dev Kit 2023 (Project Volterra) firmware"
+pkgver=20250808
+pkgrel=0
+arch=("any")
+options=('!strip')
+url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
+license=('GPL2' 'GPL3' 'custom')
+makedepends=('git')
+options=(!strip)
+pkgname=(volterra-firmware)
+_srcdir=linux-firmware
+
+source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git")
+sha256sums=('SKIP')
+
+prepare() {
+  cd linux-firmware
+  git checkout tags/${pkgver}
+  local _c
+  for _c in "${_backports[@]}"; do
+    git log --oneline -1 "${_c}"
+    git cherry-pick -n "${_c}"
+  done
+}
+
+package_volterra-firmware() {
+  pkgdesc+=" - Firmware for Microsoft Dev Kit 2023 (Project Volterra)"
+
+  install -Dt "${pkgdir}/usr/share/licenses/${pkgname}" -m644 ${_srcdir}/WHENCE
+
+  mkdir -pv "${pkgdir}"/usr/lib/firmware
+  cp -rv "${_srcdir}"/qca "${pkgdir}"/usr/lib/firmware
+  cp -rv "${_srcdir}"/qcom "${pkgdir}"/usr/lib/firmware
+  cp -rv "${_srcdir}"/ath11k "${pkgdir}"/usr/lib/firmware
+  cp -rv "${_srcdir}"/rtl_nic "${pkgdir}"/usr/lib/firmware
+
+  # Make directory /usr/lib/qcom/qcom/sc8280xp/microsoft/blackrock/ in the package
+  mkdir -p "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock/
+  
+  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp -v  "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/adspr.jsn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/adspua.jsn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/battmgr.jsn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/cdspr.jsn \
+    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+
+#   # Install video acceleration support (venus) firmware for volterra
+#   cp qcvss8280.mbn "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/LENOVO/21BX
+#   # Install bluetooth firmware for volterra
+#   cp hpnv21.b8c "${pkgdir}"/usr/lib/firmware/qca
+#   # Install gpu firmware for volterra
+#   cp a690_gmu.bin "${pkgdir}"/usr/lib/firmware/qcom
+#   # Create a symlink for volterra sound firmware
+#   cd "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp
+#   ln -s LENOVO/21BX/audioreach-tplg.bin SC8280XP-LENOVO-volterra-tplg.bin
+#   # Create a symlink for volterra's WiFi card
+#   cd "${pkgdir}"/usr/lib/firmware/ath11k/WCN6855
+#   ln -s hw2.0/ hw2.1
+}

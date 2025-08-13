@@ -27,7 +27,7 @@ gpg --homedir /root/.gnupg --list-keys
 
 sudo pacman -S base-devel --noconfirm --needed
 
-for i in "linux-volterra" ; do
+for i in "linux-volterra" "volterra-firmware" ; do
 	status=13
 	git submodule update --init $i
 	cd $i
