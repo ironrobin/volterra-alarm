@@ -1,7 +1,7 @@
 pkgname="volterra-firmware"
 pkgdesc="Microsoft Dev Kit 2023 (Project Volterra) firmware"
 pkgver=20250808
-pkgrel=0
+pkgrel=1
 arch=("any")
 options=('!strip')
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
@@ -11,8 +11,26 @@ options=(!strip)
 pkgname=(volterra-firmware)
 _srcdir=linux-firmware
 
-source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git")
-sha256sums=('SKIP')
+source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git"
+        "qcadsp8280.mbn"
+        "qccdsp8280.mbn"
+        "qcdxkmsuc8280.mbn"
+        "qcvss8280.mbn"
+        "adspr.jsn"
+        "adspua.jsn"
+        "battmgr.jsn"
+        "cdspr.jsn"
+)
+sha256sums=('SKIP'
+            'bb8a55650bceaec09edadfde4bee54563f03fb072fa9807d91857e0a96b33310'
+            '5da3feeb5ca7231c14a3dcfa1a137644f2955dca46909897334bb4012df06320'
+            '38012c7a55da315f5ae345170da035be90d48b49d81eef9cdb982f5bcbce8e43'
+            '3f4975f9f074707fbd702cc3998d09568cdfd1008c5c2f7877f91137c38c9ed9'
+            '4b9566fcfdc1656c38d8158d79db6964e9c4b57a6e42b46241e8d63aabc42d8d'
+            'd65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d'
+            'b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4'
+            '7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64'
+)
 
 prepare() {
   cd linux-firmware
@@ -35,25 +53,19 @@ package_volterra-firmware() {
   cp -rv "${_srcdir}"/ath11k "${pkgdir}"/usr/lib/firmware
   cp -rv "${_srcdir}"/rtl_nic "${pkgdir}"/usr/lib/firmware
 
-  # Make directory /usr/lib/qcom/qcom/sc8280xp/microsoft/blackrock/ in the package
-  mkdir -p "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock/
+
+  DEST_DIR="${pkgdir}"/usr/lib/firmware/updates/qcom/sc8280xp/microsoft/blackrock/
+
+  mkdir -p "${DEST_DIR}"
   
-  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
-  cp -v  "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
-  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
-  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
-  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/adspr.jsn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
-  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/adspua.jsn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
-  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/battmgr.jsn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
-  cp -v "${_srcdir}"/qcom/sc8280xp/LENOVO/21BX/cdspr.jsn \
-    "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/microsoft/blackrock
+  cp qcadsp8280.mbn "${DEST_DIR}"
+  cp qccdsp8280.mbn "${DEST_DIR}"
+  cp qcdxkmsuc8280.mbn "${DEST_DIR}"
+  cp qcvss8280.mbn "${DEST_DIR}"
+  cp adspr.jsn "${DEST_DIR}"
+  cp adspua.jsn "${DEST_DIR}"
+  cp battmgr.jsn "${DEST_DIR}"
+  cp cdspr.jsn "${DEST_DIR}"
 
 #   # Install video acceleration support (venus) firmware for volterra
 #   cp qcvss8280.mbn "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp/LENOVO/21BX
