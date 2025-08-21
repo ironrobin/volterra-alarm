@@ -9,7 +9,7 @@ _srcname=linux-6.16
 _kernelname=${pkgbase#linux}
 _desc="Windows Dev Kit 2023 (Project Volterra) (Snapdragon 8cx Gen 3)"
 pkgver="6.16.0"
-pkgrel=1
+pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -20,12 +20,14 @@ source=('config'
         '60-linux.hook'
         '90-linux.hook'
         'mkinitcpio.conf.d-volterra.conf'
+        'linux-volterra.install'
 )
 md5sums=('8c5cc643026df74b1d488da827eff3eb'
-         '9091778b7a51771d10db432d6c6ea150'
+         '09d9c65d63dc521dc0709c79bc63b2f9'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '6f99095fbe9f577233b53a83802aab59'
          '245fe617d4ed45f211e4b9127fc91550'
+         '9c795aa7ae26de6c214c20e878ee61bf'
 )
 
 prepare() {
