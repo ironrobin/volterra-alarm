@@ -22,8 +22,12 @@ x13s_options = {
     "CONFIG_USB_HIDDEV": "y",
     "CONFIG_HID_CP2112": "n",
     "CONFIG_HID_FT260": "n",
+    "CONFIG_FUEL_GAUGE_STC3117": "n",
     # Turn on essential configuration options
+    "CONFIG_PCIE_DW_DEBUGFS": "n",
     "CONFIG_BLOCK_LEGACY_AUTOLOAD": "y",
+    "CONFIG_PCIE_QCOM_COMMON": "y",
+    "CONFIG_PCIE_QCOM": "y",
     "CONFIG_PHY_QCOM_APQ8064_SATA": "m",
     "CONFIG_PHY_QCOM_IPQ806X_SATA": "m",
     "CONFIG_PHY_QCOM_QMP": "y",

@@ -2,53 +2,62 @@
 # Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
 
 buildarch=8
-_branch=jg/ubuntu-qcom-x1e-6.16
+_branch=qcom-laptops
 
 pkgbase=linux-volterra
-_srcname=linux-6.16
+_srcname=linux-qcom-laptops-v6.17
 _kernelname=${pkgbase#linux}
 _desc="Windows Dev Kit 2023 (Project Volterra) (Snapdragon 8cx Gen 3)"
-pkgver="6.16.0"
+pkgver="6.17.0"
 pkgrel=2
-arch=('aarch64')
+
+case "$CARCH" in
+  aarch64)
+    _arch=arm64
+    _cross=aarch64-linux-gnu-
+    arch=('aarch64')
+    ;;
+  x86_64)
+    _arch=x86_64
+    _cross=""
+    arch=('x86_64')
+    ;;
+esac
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'dtc')
 options=('!strip')
-source=('config'
+source=('https://gitlab.com/Linaro/arm64-laptops/linux/-/archive/qcom-laptops-v6.17/linux-qcom-laptops-v6.17.tar.gz'
+        'config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook'
         'mkinitcpio.conf.d-volterra.conf'
         'linux-volterra.install'
 )
-md5sums=('8c5cc643026df74b1d488da827eff3eb'
+md5sums=('d56a3bb038abf0d0e81e414a8ffbdb9f'
+         '0f03e79e69d011173b149e4f50bd2b6e'
          '09d9c65d63dc521dc0709c79bc63b2f9'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '6f99095fbe9f577233b53a83802aab59'
-         '245fe617d4ed45f211e4b9127fc91550'
-         '9c795aa7ae26de6c214c20e878ee61bf'
-)
+         '2078523fdcb947c62355e7be83e91278'
+         '9c795aa7ae26de6c214c20e878ee61bf')
 
 prepare() {
-  MAKEFLAGS=-j8
-  echo "Shallow cloning jglathe's linux repo"
-  # if src dir exists, remove it
-  [[ -d ${_srcname} ]] && rm -rf ${_srcname}
-  git clone --depth=1 https://github.com/jglathe/linux_ms_dev_kit.git ${_srcname} -b ${_branch}
-
   cd $_srcname
 
   echo "Setting version..."
   #scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
-
+  # qcom_laptops.config
   cat "${srcdir}/config" > ./.config
 }
 
 build() {
   cd ${_srcname}
+  export ARCH="$_arch"
+  export CROSS_COMPILE="$_cross"
 
   # get kernel version
   make prepare
@@ -80,6 +89,8 @@ _package() {
   install=${pkgname}.install
 
   cd $_srcname
+  export ARCH="$_arch"
+  export CROSS_COMPILE="$_cross"
   local kernver="$(<version)"
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
 
