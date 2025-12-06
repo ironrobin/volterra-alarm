@@ -9,7 +9,7 @@ _srcname=linux-qcom-laptops-v6.17
 _kernelname=${pkgbase#linux}
 _desc="Windows Dev Kit 2023 (Project Volterra) (Snapdragon 8cx Gen 3)"
 pkgver="6.17.0"
-pkgrel=2
+pkgrel=3
 
 case "$CARCH" in
   aarch64)
@@ -36,7 +36,7 @@ source=('https://gitlab.com/Linaro/arm64-laptops/linux/-/archive/qcom-laptops-v6
         'linux-volterra.install'
 )
 md5sums=('d56a3bb038abf0d0e81e414a8ffbdb9f'
-         '0f03e79e69d011173b149e4f50bd2b6e'
+         '9a74b940193627aedff59a45f3c6dc00'
          '09d9c65d63dc521dc0709c79bc63b2f9'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '6f99095fbe9f577233b53a83802aab59'
