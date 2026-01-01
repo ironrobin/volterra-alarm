@@ -8,8 +8,8 @@ pkgbase=linux-volterra
 _srcname=linux-6.18
 _kernelname=${pkgbase#linux}
 _desc="Windows Dev Kit 2023 (Project Volterra) (Snapdragon 8cx Gen 3)"
-pkgver="6.18.0"
-pkgrel=2
+pkgver="6.18.2"
+pkgrel=1
 
 case "$CARCH" in
   aarch64)
@@ -39,7 +39,7 @@ source=('config'
         'mkinitcpio.conf.d-volterra.conf'
         'linux-volterra.install'
 )
-md5sums=('2d419896973860f63a0c3c7160aef2f5'
+md5sums=('2c07455ff474a0ea57d31bf611cc4bcb'
          '09d9c65d63dc521dc0709c79bc63b2f9'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '6f99095fbe9f577233b53a83802aab59'
