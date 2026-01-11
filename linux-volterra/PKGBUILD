@@ -9,7 +9,7 @@ _srcname=linux-6.18
 _kernelname=${pkgbase#linux}
 _desc="Windows Dev Kit 2023 (Project Volterra) (Snapdragon 8cx Gen 3)"
 pkgver="6.18.2"
-pkgrel=1
+pkgrel=2
 
 case "$CARCH" in
   aarch64)
@@ -38,13 +38,17 @@ source=('config'
         '90-linux.hook'
         'mkinitcpio.conf.d-volterra.conf'
         'linux-volterra.install'
+        '0001-arm64-dts-qcom-sc8280xp-blackrock-enable-4-lanes-DP.patch'
+        '0001-dt-arm64-qcom-sc8280xp-blackrock-amend-usb0-sbu-mux.patch'
 )
-md5sums=('2c07455ff474a0ea57d31bf611cc4bcb'
+md5sums=('9fc0aa32d347d6d14adcc721bb59910a'
          '09d9c65d63dc521dc0709c79bc63b2f9'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '6f99095fbe9f577233b53a83802aab59'
          '2078523fdcb947c62355e7be83e91278'
-         '9c795aa7ae26de6c214c20e878ee61bf')
+         '9c795aa7ae26de6c214c20e878ee61bf'
+         'cf46affecd2c25e55aea01bb96516d26'
+         'e1ffac3f8bbbf3e4fb6649c9ecbe9784')
 
 prepare() {
   echo "Shallow cloning steev's linux repo"
@@ -52,6 +56,8 @@ prepare() {
   [[ -d ${_srcname} ]] && rm -rf ${_srcname}
   git clone --depth=1 https://github.com/steev/linux.git ${_srcname} -b ${_branch}
   cd $_srcname
+  patch -Np1 -i "${srcdir}/0001-arm64-dts-qcom-sc8280xp-blackrock-enable-4-lanes-DP.patch"
+  patch -Np1 -i "${srcdir}/0001-dt-arm64-qcom-sc8280xp-blackrock-amend-usb0-sbu-mux.patch"
 
   echo "Setting version..."
   #scripts/setlocalversion --save-scmversion

@@ -1,0 +1,33 @@
+From dc259cb54661afe64946ad6e0885f325fe9cc1a8 Mon Sep 17 00:00:00 2001
+From: Jens Glathe <jglathe@oldschoolsolutions.biz>
+Date: Sun, 11 Jan 2026 12:59:12 -0600
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-blackrock: enable 4 lanes DP mode
+
+---
+ arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+index c7691c503..8d20ea7d2 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+@@ -595,7 +595,7 @@ &mdss0_dp0 {
+ };
+ 
+ &mdss0_dp0_out {
+-	data-lanes = <0 1>;
++	data-lanes = <0 1 2 3>;
+ 	remote-endpoint = <&usb_0_qmpphy_dp_in>;
+ };
+ 
+@@ -604,7 +604,7 @@ &mdss0_dp1 {
+ };
+ 
+ &mdss0_dp1_out {
+-	data-lanes = <0 1>;
++	data-lanes = <0 1 2 3>;
+ 	remote-endpoint = <&usb_1_qmpphy_dp_in>;
+ };
+ 
+-- 
+2.52.0

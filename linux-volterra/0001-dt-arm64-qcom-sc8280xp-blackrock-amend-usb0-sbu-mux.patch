@@ -1,0 +1,35 @@
+From fb782c0b85ace413e08fa11eef7fc62b384e2fce Mon Sep 17 00:00:00 2001
+From: Jens Glathe <jglathe@oldschoolsolutions.biz>
+Date: Sun, 11 Jan 2026 13:20:48 -0600
+Subject: [PATCH] dt: arm64: qcom: sc8280xp-blackrock: amend usb0-sbu-mux
+ enable gpio
+
+---
+ arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+index 8d20ea7d2..6fa6c4e52 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+@@ -243,7 +243,7 @@ linux,cma {
+ 	usb0-sbu-mux {
+ 		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+ 
+-		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
++		enable-gpios = <&tlmm 100 GPIO_ACTIVE_LOW>;
+ 		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
+ 
+ 		pinctrl-0 = <&usb0_sbu_default>;
+@@ -1274,7 +1274,7 @@ tx-pins {
+ 
+ 	usb0_sbu_default: usb0-sbu-state {
+ 		oe-n-pins {
+-			pins = "gpio101";
++			pins = "gpio100";
+ 			function = "gpio";
+ 			bias-disable;
+ 			drive-strength = <16>;
+-- 
+2.52.0
+
