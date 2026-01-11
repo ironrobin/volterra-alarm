@@ -9,6 +9,8 @@ repo_name=$(echo $repo_full | cut -d/ -f2)
 sed -i '/\[community\]/d' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 5/' /etc/pacman.conf
 pacman-key --init
+sudo pacman -Sy --needed archlinux-keyring
+sudo pacman-key --refresh-keys
 pacman -Syu --noconfirm --needed sudo git wget python
 useradd builduser -m
 chown -R builduser:builduser /build
