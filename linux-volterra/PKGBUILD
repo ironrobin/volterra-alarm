@@ -2,14 +2,13 @@
 # Maintainer: Alex Robinson <alex@ironrobin.net>
 
 buildarch=8
-_branch=lenovo-x13s-linux-6.19.y
 
 pkgbase=linux-volterra
-_srcname=linux-6.19
+_srcname=linux-qcom-laptops-v6.18
 _kernelname=${pkgbase#linux}
 _desc="Windows Dev Kit 2023 (Project Volterra) (Snapdragon 8cx Gen 3)"
-pkgver="6.19.14"
-pkgrel=0
+pkgver="6.18.0"
+pkgrel=4
 
 case "$CARCH" in
   aarch64)
@@ -32,7 +31,8 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'dtc')
 options=('!strip')
-source=('config'
+source=('https://gitlab.com/Linaro/arm64-laptops/linux/-/archive/qcom-laptops-v6.18/linux-qcom-laptops-v6.18.tar.gz'
+        'config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook'
@@ -41,7 +41,8 @@ source=('config'
         '0001-arm64-dts-qcom-sc8280xp-blackrock-enable-4-lanes-DP.patch'
         '0001-dt-arm64-qcom-sc8280xp-blackrock-amend-usb0-sbu-mux.patch'
 )
-md5sums=('5255826f319e58ea21bb611140ea59e2'
+md5sums=('2c95ca61e0fee9847cc54b834dcc798e'
+         '59bfcafa57d0a4921855cb7c2d6a5c2a'
          '09d9c65d63dc521dc0709c79bc63b2f9'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '6f99095fbe9f577233b53a83802aab59'
@@ -51,10 +52,6 @@ md5sums=('5255826f319e58ea21bb611140ea59e2'
          'e1ffac3f8bbbf3e4fb6649c9ecbe9784')
 
 prepare() {
-  echo "Shallow cloning steev's linux repo"
-  # if src dir exists, remove it
-  [[ -d ${_srcname} ]] && rm -rf ${_srcname}
-  git clone --depth=1 https://github.com/steev/linux.git ${_srcname} -b ${_branch}
   cd $_srcname
   # patch -Np1 -i "${srcdir}/0001-arm64-dts-qcom-sc8280xp-blackrock-enable-4-lanes-DP.patch"
   # patch -Np1 -i "${srcdir}/0001-dt-arm64-qcom-sc8280xp-blackrock-amend-usb0-sbu-mux.patch"
@@ -63,7 +60,7 @@ prepare() {
   #scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
-  # qcom_laptops.config
+  # arch/arm64/configs/defconfig + qcom_laptops.config
   cat "${srcdir}/config" > ./.config
 }
 
@@ -110,7 +107,7 @@ _package() {
   echo "Installing boot image (compressed) and dtbs..."
   install -Dm644 arch/arm64/boot/Image.gz -T "${pkgdir}/boot/vmlinuz-linux"
   install -Dm644 arch/arm64/boot/Image -T "${pkgdir}/boot/vmlinux"
-  #make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
+  # make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
   # We just need the volterra dtb
   install -Dm644 arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb -t "${pkgdir}/boot"
 
@@ -160,6 +157,7 @@ _package-headers() {
   install -Dt "$builddir/kernel" -m644 kernel/Makefile
   install -Dt "$builddir/arch/arm64" -m644 arch/arm64/Makefile
   cp -t "$builddir" -a scripts
+b=y
 
   # add xfs and shmem for aufs building
   mkdir -p "$builddir"/{fs/xfs,mm}
