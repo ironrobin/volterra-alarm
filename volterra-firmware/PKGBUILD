@@ -1,7 +1,7 @@
 pkgname="volterra-firmware"
 pkgdesc="Microsoft Dev Kit 2023 (Project Volterra) firmware"
-pkgver=20251125
-pkgrel=1
+pkgver=20260622
+pkgrel=2
 arch=("any")
 options=('!strip')
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
@@ -53,6 +53,9 @@ package_volterra-firmware() {
   cp -rv "${_srcdir}"/qcom "${pkgdir}"/usr/lib/firmware
   cp -rv "${_srcdir}"/ath11k "${pkgdir}"/usr/lib/firmware
   cp -rv "${_srcdir}"/rtl_nic "${pkgdir}"/usr/lib/firmware
+
+  # needed for wifi dongle
+  cp -rv "${_srcdir}"/mediatek "${pkgdir}"/usr/lib/firmware
 
 
   DEST_DIR="${pkgdir}"/usr/lib/firmware/updates/qcom/sc8280xp/microsoft/blackrock/
