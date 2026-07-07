@@ -2,14 +2,14 @@
 # Maintainer: Alex Robinson <alex@ironrobin.net>
 
 buildarch=8
-_branch=lenovo-x13s-linux-6.19.y
+_branch=lenovo-x13s-linux-7.0.y
 
 pkgbase=linux-volterra
-_srcname=linux-6.19
+_srcname=linux-7.0
 _kernelname=${pkgbase#linux}
 _desc="Windows Dev Kit 2023 (Project Volterra) (Snapdragon 8cx Gen 3)"
-pkgver="6.19.14"
-pkgrel=0
+pkgver="7.0.14"
+pkgrel=1
 
 case "$CARCH" in
   aarch64)
@@ -41,7 +41,7 @@ source=('config'
         '0001-arm64-dts-qcom-sc8280xp-blackrock-enable-4-lanes-DP.patch'
         '0001-dt-arm64-qcom-sc8280xp-blackrock-amend-usb0-sbu-mux.patch'
 )
-md5sums=('d1a6ab1e748b222846a79267257eed4d'
+md5sums=('d28c742614c8aa9d1977ec3368f2aee4'
          '09d9c65d63dc521dc0709c79bc63b2f9'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '6f99095fbe9f577233b53a83802aab59'
