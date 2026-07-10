@@ -29,13 +29,14 @@ gpg --homedir /root/.gnupg --list-keys
 
 sudo pacman -S aarch64-linux-gnu-binutils aarch64-linux-gnu-gcc base-devel --noconfirm --needed
 
-for i in "linux-volterra" "volterra-firmware" ; do
+for i in "linux-volterra" "volterra-firmware" "archinstall-aarch64"; do
 	status=13
 	git submodule update --init $i
 	cd $i
 
 	for i in $(sudo -u builduser makepkg --packagelist); do
 		package=$(basename $i)
+		package="${package/-x86_64.pkg.tar.zst/-aarch64.pkg.tar.zst}"
 		wget https://github.com/$repo_owner/$repo_name/releases/download/packages/$package \
 			&& echo "Warning: $package already built, did you forget to bump the pkgver and/or pkgrel? It will not be rebuilt."
 	done
