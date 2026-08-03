@@ -1,3 +1,12 @@
+# This project has moved
+
+**The canonical repository is now on Codeberg:**
+
+https://codeberg.org/ironrobin/aarch64
+
+This GitHub repository is no longer accepting issues or pull requests. Please
+open new issues and submit contributions on Codeberg.
+
 Packages for the Windows Dev Kit 2023 (code name “Project Volterra”)
 
 ## Binary repository
